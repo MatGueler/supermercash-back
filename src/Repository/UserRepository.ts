@@ -7,6 +7,6 @@ export async function insertUser(body: IRegisterUser) {
 export async function getUserByEmail(email: string) {
   return await prisma.users.findFirst({ where: { email } });
 }
-export async function loginUser() {
+export async function loginUser(token: string, refreshToken: string) {
   return "0";
 }

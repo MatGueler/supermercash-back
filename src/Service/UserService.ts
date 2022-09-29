@@ -13,6 +13,7 @@ import { notFoundError, unauthorizedError } from "../Utils/ErrorUtils";
 import { ILoginUser } from "../Types/LoginTypes";
 
 export async function registerUser(body: IRegisterUser) {
+  // # User should not exist
   await verifyUserExist(body.email, false);
   const encryptedPassword = encryptPassword(body.password);
   // * Remove property confirmPassword of body
@@ -21,10 +22,12 @@ export async function registerUser(body: IRegisterUser) {
 }
 
 export async function loginUser(body: ILoginUser) {
-  await verifyUserExist(body.email, true);
-  // const token = generateToken();
-  await userRepository.loginUser();
-  return "oi";
+  // # User should exist
+  const user = await verifyUserExist(body.email, true);
+  const token = generateToken(user.id);
+  const refreshToken = generateRefreshToken();
+  await userRepository.loginUser(token,refreshToken);
+  return { token };
 }
 
 async function createUser(body: IRegisterUser) {
@@ -41,6 +44,7 @@ async function verifyUserExist(email: string, shouldExist: boolean) {
   if (!user && shouldExist === true) {
     throw notFoundError("User not found");
   }
+  return user;
 }
 
 // - Aux functions
@@ -52,12 +56,20 @@ function encryptPassword(password: string) {
 }
 
 function generateToken(id: number) {
-  const JWT_SECRET = String(process.env.JWT_SECRET);
+  const JWT_SECRET_TOKEN = String(process.env.JWT_SECRET);
   const token = jwt.sign(
     {
       userId: Number(id),
     },
-    JWT_SECRET,
-    { expiresIn: process.env.TIME_JWT }
+    JWT_SECRET_TOKEN,
+    { expiresIn: process.env.TIME_JWT_TOKEN }
   );
+  return token;
+}
+function generateRefreshToken() {
+  const JWT_SECRET_REFRESH = String(process.env.JWT_SECRET);
+  const token = jwt.sign({}, JWT_SECRET_REFRESH, {
+    expiresIn: process.env.TIME_JWT_REFRESH,
+  });
+  return token;
 }
