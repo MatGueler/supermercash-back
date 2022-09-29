@@ -3,6 +3,6 @@ import { Users } from "@prisma/client";
 export interface IRegisterUser {
   name: string;
   email: string;
-  passwod: string;
+  password: string;
   confirmPassword: string;
 }
