@@ -31,6 +31,12 @@ export async function loginUser(body: ILoginUser) {
   return { token };
 }
 
+export async function GetUserInfos(userId: number) {
+  const user = await verifyUserExistById(userId);
+  delete user.password;
+  return user;
+}
+
 async function createUser(body: IRegisterUser) {
   await userRepository.insertUser(body);
 }
@@ -43,6 +49,14 @@ async function verifyUserExist(email: string, shouldExist: boolean) {
     throw unauthorizedError("Unable to create account");
   }
   if (!user && shouldExist === true) {
+    throw notFoundError("User not found");
+  }
+  return user;
+}
+
+async function verifyUserExistById(userId: number) {
+  const user = await userRepository.getUserById(userId);
+  if (!user) {
     throw notFoundError("User not found");
   }
   return user;

@@ -14,3 +14,9 @@ export async function LoginUser(req: Request, res: Response) {
   const token = await userService.loginUser(body);
   res.status(200).send(token);
 }
+
+export async function GetUserInfos(req: Request, res: Response) {
+  const userId: number = res.locals.userId;
+  const userInfo = await userService.GetUserInfos(userId);
+  res.status(200).send(userInfo);
+}
