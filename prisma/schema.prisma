@@ -11,11 +11,12 @@ datasource db {
 }
 
 model Users {
-  id       Int        @id @default(autoincrement())
-  name     String
-  email    String     @unique
-  password String
-  Sessions Sessions[]
+  id         Int         @id @default(autoincrement())
+  name       String
+  email      String      @unique
+  password   String
+  Sessions   Sessions[]
+  UserImages UserImages?
 
   @@map("users")
 }
@@ -43,4 +44,13 @@ model Products {
   urlImage String @unique
 
   @@map("products")
+}
+
+model UserImages {
+  id       Int    @id @default(autoincrement())
+  userId   Int    @unique
+  user     Users  @relation(fields: [userId], references: [id])
+  urlImage String
+
+  @@map("userImages")
 }
