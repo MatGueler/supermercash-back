@@ -36,3 +36,11 @@ model Supermarkets {
 
   @@map("supermarkets")
 }
+
+model Products {
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  urlImage String @unique
+
+  @@map("products")
+}
