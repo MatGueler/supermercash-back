@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 
 export async function RegisterUser(req: Request, res: Response) {
   const body = req.body;
-  const token = await userService.loginUser();
+  const token = await userService.registerUser(body);
   res.status(200).send(token);
 }
 
