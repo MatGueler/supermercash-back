@@ -26,7 +26,7 @@ export async function loginUser(body: ILoginUser) {
   const user = await verifyUserExist(body.email, true);
   const token = generateToken(user.id);
   const refreshToken = generateRefreshToken();
-  await userRepository.loginUser(token,refreshToken);
+  await userRepository.loginUser(token, refreshToken, user.id);
   return { token };
 }
 
