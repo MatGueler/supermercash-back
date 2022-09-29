@@ -24,6 +24,7 @@ export async function registerUser(body: IRegisterUser) {
 export async function loginUser(body: ILoginUser) {
   // # User should exist
   const user = await verifyUserExist(body.email, true);
+  await verifyPassword(body.password, user.password);
   const token = generateToken(user.id);
   const refreshToken = generateRefreshToken();
   await userRepository.loginUser(token, refreshToken, user.id);
@@ -45,6 +46,13 @@ async function verifyUserExist(email: string, shouldExist: boolean) {
     throw notFoundError("User not found");
   }
   return user;
+}
+
+async function verifyPassword(password: string, encryptedPassword: string) {
+  const verifyPassword = bcrypt.compareSync(password, encryptedPassword);
+  if (!verifyPassword) {
+    throw unauthorizedError("User or password are incorrect");
+  }
 }
 
 // - Aux functions
