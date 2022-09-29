@@ -1,10 +1,21 @@
+//  * Functions
 import * as userRepository from "../Repository/UserRepository";
+
+//  # Libs
+import bcrypt from 'bcrypt'
+
+//  - Types
 import { IRegisterUser } from "../Types/RegisterTypes";
 
+//  ! Errors
+import { unauthorizedError } from "../Utils/ErrorUtils";
+
 export async function registerUser(body: IRegisterUser) {
-  // verifyUserNotExist(body.email);
+  await verifyUserNotExist(body.email);
+  const encryptedPassword = encryptPassword(body.password);
+  // * Remove property confirmPassword of body
   delete body.confirmPassword;
-  await createUser(body);
+  await createUser({ ...body, password: encryptedPassword });
 }
 
 export async function loginUser() {
@@ -16,4 +27,18 @@ export async function loginUser() {
 async function createUser(body: IRegisterUser) {
   await userRepository.insertUser(body);
 }
-function verifyUserNotExist(body: any) {}
+
+async function verifyUserNotExist(email: string) {
+  const user = await userRepository.getUserByEmail(email);
+  if (user) {
+    throw unauthorizedError("Unable to create account");
+  }
+}
+
+// - Aux functions
+
+function encryptPassword(password: string) {
+  const SALT = 10;
+  const cryptPassword = bcrypt.hashSync(password, SALT);
+  return cryptPassword;
+}
