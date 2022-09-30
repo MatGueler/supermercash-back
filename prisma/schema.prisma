@@ -45,6 +45,7 @@ model Products {
   name            String            @unique
   urlImage        String            @unique
   ProductsMarkets ProductsMarkets[]
+  Purchases       Purchases[]
 
   @@map("products")
 }
@@ -65,17 +66,16 @@ model ProductsMarkets {
   supermarket   Supermarkets @relation(fields: [supermarketId], references: [id])
   supermarketId Int
   price         Float
-  Purchases     Purchases[]
 
   @@map("productsMarkets")
 }
 
 model Purchases {
-  id                Int             @id @default(autoincrement())
-  productsMarkets   ProductsMarkets @relation(fields: [productsMarketsId], references: [id])
-  productsMarketsId Int
-  user              Users           @relation(fields: [userId], references: [id])
-  userId            Int
+  id        Int      @id @default(autoincrement())
+  product   Products @relation(fields: [productId], references: [id])
+  productId Int
+  user      Users    @relation(fields: [userId], references: [id])
+  userId    Int
 
   @@map("purchases")
 }
