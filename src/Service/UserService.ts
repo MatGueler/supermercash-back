@@ -80,7 +80,6 @@ function encryptPassword(password: string) {
 function generateToken(id: number) {
   const JWT_SECRET_TOKEN = String(process.env.JWT_SECRET);
   const TIME_JWT_TOKEN = String(process.env.TIME_JWT_TOKEN);
-  console.log(TIME_JWT_TOKEN);
   const token = jwt.sign(
     {
       userId: Number(id),
