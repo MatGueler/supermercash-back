@@ -13,7 +13,16 @@ export async function addProduct(productId: number, userId: number) {
     data: { productId, userId },
   });
 }
+
 export async function getProductIdByName(name: string) {
   const id = await prisma.products.findFirst({ where: { name } });
   return id;
+}
+
+export async function getQuantifyByProduct(productId: number, userId: number) {
+  const quantify = await prisma.purchases.aggregate({
+    where: { productId, userId },
+    _count:true
+  });
+  return quantify;
 }
