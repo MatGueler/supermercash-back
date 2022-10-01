@@ -4,6 +4,6 @@ import { validatingToken } from "../Middlewares/ValidateToken";
 
 const cartRouter = Router();
 
-cartRouter.get("/cart", validatingToken, GetCartValue);
+cartRouter.post("/cart", validatingToken, GetCartValue);
 
 export default cartRouter;
