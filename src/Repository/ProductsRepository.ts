@@ -7,3 +7,7 @@ JOIN products ON p."productId"=products.id
 GROUP BY p."productId",products.name,products."urlImage"`;
   return products;
 }
+
+export async function addProduct(name) {
+  // await prisma.purchases.createMany;
+}
