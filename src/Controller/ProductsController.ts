@@ -14,11 +14,8 @@ export async function AddProduct(req: Request, res: Response) {
 }
 
 export async function getQuantifyByProduct(req: Request, res: Response) {
-  const body: { name: string } = req.body;
+  const name: string = req.params.product;
   const userId: number = res.locals.userId;
-  const quantify = await productsService.getQuantifyByProduct(
-    body.name,
-    userId
-  );
+  const quantify = await productsService.getQuantifyByProduct(name, userId);
   res.status(200).send(quantify);
 }

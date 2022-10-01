@@ -23,6 +23,5 @@ export async function getQuantifyByProduct(name: string, userId: number) {
     product.id,
     userId
   );
-  console.log(quantifyProduct);
   return quantifyProduct;
 }

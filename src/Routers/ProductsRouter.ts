@@ -10,6 +10,10 @@ const productsRouter = Router();
 
 productsRouter.get("/products", GetAllProducts);
 productsRouter.post("/products", validatingToken, AddProduct);
-productsRouter.get("/products/quantify", validatingToken, getQuantifyByProduct);
+productsRouter.get(
+  "/products/quantify/:product",
+  validatingToken,
+  getQuantifyByProduct
+);
 
 export default productsRouter;
