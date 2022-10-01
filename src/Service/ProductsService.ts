@@ -12,6 +12,7 @@ export async function getAllProducts() {
   return products;
 }
 
-export async function addProduct(name: string) {
-  await productsRepository.addProduct(name)
+export async function addProduct(name: string, userId: number) {
+  const product = await productsRepository.getProductIdByName(name);
+  await productsRepository.addProduct(product.id, userId);
 }

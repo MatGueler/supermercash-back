@@ -8,6 +8,7 @@ export async function GetAllProducts(req: Request, res: Response) {
 
 export async function AddProduct(req: Request, res: Response) {
   const body: { name: string } = req.body;
-  await productsService.addProduct(body.name);
+  const userId:number = res.locals.userId;
+  await productsService.addProduct(body.name, userId);
   res.sendStatus(201);
 }

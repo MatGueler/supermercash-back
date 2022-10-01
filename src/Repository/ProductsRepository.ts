@@ -8,6 +8,12 @@ GROUP BY p."productId",products.name,products."urlImage"`;
   return products;
 }
 
-export async function addProduct(name) {
-  // await prisma.purchases.createMany;
+export async function addProduct(productId: number, userId: number) {
+  await prisma.purchases.create({
+    data: { productId, userId },
+  });
+}
+export async function getProductIdByName(name: string) {
+  const id = await prisma.products.findFirst({ where: { name } });
+  return id;
 }
