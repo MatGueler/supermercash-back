@@ -3,6 +3,8 @@ import {
   AddProduct,
   GetAllProducts,
   getQuantifyByProduct,
+  RemoveAllProducts,
+  RemoveOneProduct,
 } from "../Controller/ProductsController";
 import { validatingToken } from "../Middlewares/ValidateToken";
 
@@ -15,5 +17,7 @@ productsRouter.get(
   validatingToken,
   getQuantifyByProduct
 );
+productsRouter.delete("/products/delete", validatingToken, RemoveAllProducts);
+productsRouter.delete("/products/delete/:product", validatingToken, RemoveOneProduct);
 
 export default productsRouter;
