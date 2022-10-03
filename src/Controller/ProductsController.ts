@@ -13,6 +13,13 @@ export async function AddProduct(req: Request, res: Response) {
   res.sendStatus(201);
 }
 
+export async function RemoveOneProduct(req: Request, res: Response) {
+  const name: string = req.params.product;
+  const userId: number = res.locals.userId;
+  await productsService.removeOneProduct(name, userId);
+  res.sendStatus(200);
+}
+
 export async function RemoveAllProducts(req: Request, res: Response) {
   const userId: number = res.locals.userId;
   await productsService.removeAllProducts(userId);
