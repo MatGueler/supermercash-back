@@ -1,6 +1,6 @@
 //  * Functions
 import * as productsRepository from "../Repository/ProductsRepository";
-import { notFoundError } from "../Utils/ErrorUtils";
+import { notFoundError, unauthorizedError } from "../Utils/ErrorUtils";
 
 //  # Libs
 
@@ -24,7 +24,7 @@ export async function removeOneProduct(productName: string, userId: number) {
     product.id,
     userId
   );
-  verifyProductExistInCart(firstProduct);
+  await verifyProductExistInCart(firstProduct);
   await productsRepository.removeOneProduct(firstProduct.id);
 }
 
