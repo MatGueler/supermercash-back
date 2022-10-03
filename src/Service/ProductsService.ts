@@ -17,6 +17,10 @@ export async function addProduct(name: string, userId: number) {
   await productsRepository.addProduct(product.id, userId);
 }
 
+export async function removeAllProducts(userId: number) {
+  await productsRepository.removeAllProducts(userId);
+}
+
 export async function getQuantifyByProduct(name: string, userId: number) {
   const product = await productsRepository.getProductIdByName(name);
   const quantifyProduct = await productsRepository.getQuantifyByProduct(

@@ -14,6 +14,10 @@ export async function addProduct(productId: number, userId: number) {
   });
 }
 
+export async function removeAllProducts(userId: number) {
+  await prisma.purchases.deleteMany({ where: { userId } });
+}
+
 export async function getProductIdByName(name: string) {
   const id = await prisma.products.findFirst({ where: { name } });
   return id;
@@ -22,7 +26,7 @@ export async function getProductIdByName(name: string) {
 export async function getQuantifyByProduct(productId: number, userId: number) {
   const quantify = await prisma.purchases.aggregate({
     where: { productId, userId },
-    _count:true
+    _count: true,
   });
   return quantify;
 }
