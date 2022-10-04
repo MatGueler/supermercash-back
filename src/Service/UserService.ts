@@ -11,6 +11,7 @@ import { IRegisterUser } from "../Types/RegisterTypes";
 //  ! Errors
 import { notFoundError, unauthorizedError } from "../Utils/ErrorUtils";
 import { ILoginUser } from "../Types/LoginTypes";
+import { IUpdateUser } from "../Types/UpdateUserTypes";
 
 export async function registerUser(body: IRegisterUser) {
   // # User should not exist
@@ -46,6 +47,11 @@ async function createUser(body: IRegisterUser) {
   await userRepository.insertUser(body);
 }
 
+export async function updateUserInfo(body: IUpdateUser, userId: number) {
+  await verifyUserExistById(userId);
+  await updateAllUserInfo(body, userId);
+}
+
 //  * verifyUserExist function recive two params, email and a boolean, if user sould exist boolean is true, if must not exist is false
 
 async function verifyUserExist(email: string, shouldExist: boolean) {
@@ -72,6 +78,12 @@ async function verifyPassword(password: string, encryptedPassword: string) {
   if (!verifyPassword) {
     throw unauthorizedError("User or password are incorrect");
   }
+}
+
+async function updateAllUserInfo(body: IUpdateUser, userId: number) {
+  await userRepository.updateUserInfo(body.name, body.email, userId);
+  await userRepository.updateUserAdress(body.adress, userId);
+  await userRepository.updateUserPhone(body.phone, userId);
 }
 
 // - Aux functions
