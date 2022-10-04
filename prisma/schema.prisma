@@ -15,7 +15,8 @@ model Users {
   Purchases  Purchases[]
   Sessions   Sessions[]
   UserImages UserImages?
-  userPhones UserPhones? @relation("userPhonesTousers")
+  UserPhones UserPhones?
+  UserAdress UserAdress?
 
   @@map("users")
 }
@@ -57,6 +58,24 @@ model UserImages {
   @@map("userImages")
 }
 
+model UserPhones {
+  id     Int    @id @default(autoincrement())
+  userId Int    @unique
+  phone  String
+  users  Users  @relation(fields: [userId], references: [id])
+
+  @@map("userPhones")
+}
+
+model UserAdress {
+  id     Int    @id @default(autoincrement())
+  userId Int    @unique
+  adress String
+  users  Users  @relation(fields: [userId], references: [id])
+
+  @@map("userAdress")
+}
+
 model ProductsMarkets {
   id            Int          @id @default(autoincrement())
   productId     Int
@@ -76,13 +95,4 @@ model Purchases {
   user      Users    @relation(fields: [userId], references: [id])
 
   @@map("purchases")
-}
-
-model UserPhones {
-  id     Int    @id @default(autoincrement())
-  userId Int    @unique
-  phone  String
-  users  Users  @relation("userPhonesTousers", fields: [userId], references: [id])
-
-  @@map("userPhones")
 }
