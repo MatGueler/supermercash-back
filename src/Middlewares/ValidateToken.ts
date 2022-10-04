@@ -33,7 +33,7 @@ export async function validatingToken(
         where: { accessToken: token },
       });
       if (!getToken) {
-        throw unauthorizedError("Invalid token");
+        throw unauthorizedError("Esse token não existe mais");
       }
       const JWT_SECRET_REFRESH = String(process.env.JWT_SECRET_REFRESH);
       const rToken = String(getToken.refreshToken);
@@ -58,10 +58,11 @@ export async function validatingToken(
         },
       });
 
+      res.locals.token = accessToken;
       res.locals.userId = userId;
       next();
     } catch {
-      throw unauthorizedError("Invalid token");
+      throw unauthorizedError("Invalid token expirou");
     }
   }
 }
