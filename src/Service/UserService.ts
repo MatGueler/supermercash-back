@@ -37,8 +37,8 @@ export async function GetUserInfos(userId: number) {
     name: user.name,
     email: user.email,
     image: user.UserImages,
-    adress: user.UserAdress,
-    phone: user.UserPhones,
+    adress: user.UserAdress ?? "",
+    phone: user.UserPhones ?? "",
   };
 }
 
