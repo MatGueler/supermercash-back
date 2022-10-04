@@ -10,7 +10,26 @@ export async function getUserByEmail(email: string) {
 }
 
 export async function getUserById(userId: number) {
-  return await prisma.users.findFirst({ where: { id: userId } });
+  return await prisma.users.findFirst({
+    where: { id: userId },
+    include: {
+      UserImages: {
+        select: {
+          urlImage: true,
+        },
+      },
+      UserAdress: {
+        select: {
+          adress: true,
+        },
+      },
+      UserPhones: {
+        select: {
+          phone: true,
+        },
+      },
+    },
+  });
 }
 
 export async function loginUser(

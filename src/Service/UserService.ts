@@ -33,8 +33,13 @@ export async function loginUser(body: ILoginUser) {
 
 export async function GetUserInfos(userId: number) {
   const user = await verifyUserExistById(userId);
-  delete user.password;
-  return user;
+  return {
+    name: user.name,
+    email: user.email,
+    image: user.UserImages,
+    adress: user.UserAdress,
+    phone: user.UserPhones,
+  };
 }
 
 async function createUser(body: IRegisterUser) {
