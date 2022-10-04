@@ -11,7 +11,7 @@ import { IRegisterUser } from "../Types/RegisterTypes";
 //  ! Errors
 import { notFoundError, unauthorizedError } from "../Utils/ErrorUtils";
 import { ILoginUser } from "../Types/LoginTypes";
-import { IUpdateUser } from "../Types/UpdateUserTypes";
+import { IUpdateUser, IUpdateUserImage } from "../Types/UpdateUserTypes";
 
 export async function registerUser(body: IRegisterUser) {
   // # User should not exist
@@ -50,6 +50,11 @@ async function createUser(body: IRegisterUser) {
 export async function updateUserInfo(body: IUpdateUser, userId: number) {
   await verifyUserExistById(userId);
   await updateAllUserInfo(body, userId);
+}
+
+export async function updateUserImage(urlImage: string, userId: number) {
+  await verifyUserExistById(userId);
+  await userRepository.updateUserImage(urlImage, userId);
 }
 
 //  * verifyUserExist function recive two params, email and a boolean, if user sould exist boolean is true, if must not exist is false
