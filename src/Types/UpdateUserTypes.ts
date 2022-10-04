@@ -4,3 +4,6 @@ export interface IUpdateUser {
   adress: string;
   phone: string;
 }
+export interface IUpdateUserImage {
+  userImage: string;
+}

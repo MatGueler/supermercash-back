@@ -63,14 +63,14 @@ export async function updateUserInfo(
   });
 }
 
-export async function updateUserImage(userImage: string, userId: number) {
+export async function updateUserImage(urlImage: string, userId: number) {
   await prisma.userImages.upsert({
     create: {
       userId,
-      urlImage: userImage,
+      urlImage,
     },
     update: {
-      urlImage: userImage,
+      urlImage,
     },
     where: {
       id: userId,
