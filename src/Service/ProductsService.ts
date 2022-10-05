@@ -12,6 +12,13 @@ export async function getAllProducts() {
   const products = await productsRepository.getAllProducts();
   return products;
 }
+export async function getQuantifyProductisHistoric(userId: number) {
+  const products = await productsRepository.getQuantifyProductisHistoric(
+    userId
+  );
+  const quantifyProducts = products[0]._sum.quantifyProducts;
+  return { quantifyProducts };
+}
 
 export async function addProduct(name: string, userId: number) {
   const product = await productsRepository.getProductIdByName(name);
