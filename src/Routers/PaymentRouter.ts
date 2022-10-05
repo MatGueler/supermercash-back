@@ -4,6 +4,6 @@ import { validatingToken } from "../Middlewares/ValidateToken";
 
 const paymentRouter = Router();
 
-paymentRouter.get("/payment", validatingToken, CreatePayment);
+paymentRouter.post("/payment", validatingToken, CreatePayment);
 
 export default paymentRouter;
