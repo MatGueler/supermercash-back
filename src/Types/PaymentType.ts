@@ -3,4 +3,6 @@ export interface IPayment {
   cardNumber: string;
   CVC: number;
   password: string;
+  purchaseValue: number;
+  quantifyProducts: number;
 }
