@@ -73,7 +73,7 @@ export async function updateUserImage(urlImage: string, userId: number) {
       urlImage,
     },
     where: {
-      id: userId,
+      userId,
     },
   });
 }

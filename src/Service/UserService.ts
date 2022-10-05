@@ -35,9 +35,9 @@ export async function loginUser(body: ILoginUser) {
 export async function GetUserInfos(userId: number) {
   const user = await verifyUserExistById(userId);
   return {
-    name: user.name,
-    email: user.email,
-    image: user.UserImages,
+    name: user.name ?? "",
+    email: user.email ?? "",
+    image: user.UserImages ?? "",
     adress: user.UserAdress ?? "",
     phone: user.UserPhones ?? "",
   };

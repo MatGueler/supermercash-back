@@ -42,7 +42,6 @@ export async function validatingToken(
       };
       const accessToken = generateToken(userId);
       const refreshToken = generateRefreshToken(userId);
-      console.log("troquei");
 
       await prisma.sessions.upsert({
         create: {

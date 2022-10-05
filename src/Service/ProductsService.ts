@@ -16,8 +16,12 @@ export async function getQuantifyProductisHistoric(userId: number) {
   const products = await productsRepository.getQuantifyProductisHistoric(
     userId
   );
-  const quantifyProducts = products[0]._sum.quantifyProducts;
-  return { quantifyProducts };
+  if (products[0]) {
+    const quantifyProducts = products[0]._sum.quantifyProducts;
+    return { quantifyProducts };
+  }
+
+  return { quantifyProducts: "" };
 }
 
 export async function addProduct(name: string, userId: number) {
