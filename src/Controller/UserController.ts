@@ -20,7 +20,6 @@ export async function GetUserInfos(req: Request, res: Response) {
   const userId: number = res.locals.userId;
   const accessToken: string = res.locals.token;
   const userInfo = await userService.GetUserInfos(userId);
-  console.log(accessToken);
   res.status(200).send({ userInfo, accessToken });
 }
 
