@@ -70,7 +70,7 @@ async function verifyUserExist(email: string, shouldExist: boolean) {
   return user;
 }
 
-async function verifyUserExistById(userId: number) {
+export async function verifyUserExistById(userId: number) {
   const user = await userRepository.getUserById(userId);
   if (!user) {
     throw notFoundError("User not found");
@@ -78,7 +78,10 @@ async function verifyUserExistById(userId: number) {
   return user;
 }
 
-async function verifyPassword(password: string, encryptedPassword: string) {
+export async function verifyPassword(
+  password: string,
+  encryptedPassword: string
+) {
   const verifyPassword = bcrypt.compareSync(password, encryptedPassword);
   if (!verifyPassword) {
     throw unauthorizedError("User or password are incorrect");
