@@ -18,8 +18,10 @@ export async function LoginUser(req: Request, res: Response) {
 
 export async function GetUserInfos(req: Request, res: Response) {
   const userId: number = res.locals.userId;
+  const accessToken: string = res.locals.token;
   const userInfo = await userService.GetUserInfos(userId);
-  res.status(200).send(userInfo);
+  console.log(accessToken);
+  res.status(200).send({ userInfo, accessToken });
 }
 
 export async function UpdateUsersInfo(req: Request, res: Response) {

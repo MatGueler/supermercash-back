@@ -27,7 +27,7 @@ export async function loginUser(body: ILoginUser) {
   const user = await verifyUserExist(body.email, true);
   await verifyPassword(body.password, user.password);
   const token = generateToken(user.id);
-  const refreshToken = generateRefreshToken();
+  const refreshToken = generateRefreshToken(user.id);
   await userRepository.loginUser(token, refreshToken, user.id);
   return { token };
 }
@@ -35,9 +35,9 @@ export async function loginUser(body: ILoginUser) {
 export async function GetUserInfos(userId: number) {
   const user = await verifyUserExistById(userId);
   return {
-    name: user.name,
-    email: user.email,
-    image: user.UserImages,
+    name: user.name ?? "",
+    email: user.email ?? "",
+    image: user.UserImages ?? "",
     adress: user.UserAdress ?? "",
     phone: user.UserPhones ?? "",
   };
@@ -70,7 +70,7 @@ async function verifyUserExist(email: string, shouldExist: boolean) {
   return user;
 }
 
-async function verifyUserExistById(userId: number) {
+export async function verifyUserExistById(userId: number) {
   const user = await userRepository.getUserById(userId);
   if (!user) {
     throw notFoundError("User not found");
@@ -78,7 +78,10 @@ async function verifyUserExistById(userId: number) {
   return user;
 }
 
-async function verifyPassword(password: string, encryptedPassword: string) {
+export async function verifyPassword(
+  password: string,
+  encryptedPassword: string
+) {
   const verifyPassword = bcrypt.compareSync(password, encryptedPassword);
   if (!verifyPassword) {
     throw unauthorizedError("User or password are incorrect");
@@ -99,9 +102,9 @@ function encryptPassword(password: string) {
   return cryptPassword;
 }
 
-function generateToken(id: number) {
-  const JWT_SECRET_TOKEN = String(process.env.JWT_SECRET);
-  const TIME_JWT_TOKEN = String(process.env.TIME_JWT_TOKEN);
+export function generateToken(id: number) {
+  const JWT_SECRET_TOKEN = String(process.env.JWT_SECRET_TOKEN);
+  const TIME_JWT_TOKEN = Number(process.env.TIME_JWT_TOKEN);
   const token = jwt.sign(
     {
       userId: Number(id),
@@ -111,10 +114,10 @@ function generateToken(id: number) {
   );
   return token;
 }
-function generateRefreshToken() {
-  const JWT_SECRET_REFRESH = String(process.env.JWT_SECRET);
-  const TIME_JWT_REFRESH = String(process.env.TIME_JWT_TOKEN);
-  const token = jwt.sign({}, JWT_SECRET_REFRESH, {
+export function generateRefreshToken(userId: number) {
+  const JWT_SECRET_REFRESH = String(process.env.JWT_SECRET_REFRESH);
+  const TIME_JWT_REFRESH = String(process.env.TIME_JWT_REFRESH);
+  const token = jwt.sign({ userId }, JWT_SECRET_REFRESH, {
     expiresIn: TIME_JWT_REFRESH,
   });
   return token;

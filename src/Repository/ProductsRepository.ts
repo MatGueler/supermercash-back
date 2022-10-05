@@ -45,3 +45,14 @@ export async function getQuantifyByProduct(productId: number, userId: number) {
   });
   return quantify;
 }
+
+export async function getQuantifyProductisHistoric(userId: number) {
+  const quantify = await prisma.historic.groupBy({
+    by: ["userId"],
+    where: { userId },
+    _sum: {
+      quantifyProducts: true,
+    },
+  });
+  return quantify;
+}
