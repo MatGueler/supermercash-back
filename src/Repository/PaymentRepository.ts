@@ -10,3 +10,11 @@ export async function createPayment(body: IPayment, userId: number) {
     },
   });
 }
+
+export async function deletePurchases(userId: number) {
+  await prisma.historic.deleteMany({
+    where: {
+      userId,
+    },
+  });
+}
