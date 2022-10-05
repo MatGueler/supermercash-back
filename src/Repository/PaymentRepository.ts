@@ -12,7 +12,7 @@ export async function createPayment(body: IPayment, userId: number) {
 }
 
 export async function deletePurchases(userId: number) {
-  await prisma.historic.deleteMany({
+  await prisma.purchases.deleteMany({
     where: {
       userId,
     },
