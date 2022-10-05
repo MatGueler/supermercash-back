@@ -32,3 +32,11 @@ export async function getQuantifyByProduct(req: Request, res: Response) {
   const quantify = await productsService.getQuantifyByProduct(name, userId);
   res.status(200).send(quantify);
 }
+
+export async function GetQuantifyProductisHistoric(req: Request, res: Response) {
+  const userId: number = res.locals.userId;
+  const quantify = await productsService.getQuantifyProductisHistoric(
+    userId
+  );
+  res.status(200).send(quantify);
+}

@@ -1,12 +1,6 @@
 //  * Functions
 import * as cartRepository from "../Repository/CartRepository";
 
-//  # Libs
-
-//  - Types
-
-//  ! Errors
-
 export async function getPurchaseValue(userId: number) {
   const cartProducts = await cartRepository.getCartByUser(userId);
   const supermarkets = await cartRepository.getSupermarkets();
@@ -27,7 +21,8 @@ async function orderValuesCarts(totalValueCarts: any) {
   for (let outer = 0; outer < arrayHash.length; outer++) {
     for (let inner = 0; inner < totalValueCarts.length; inner++) {
       if (totalValueCarts[inner].total === Number(arrayHash[outer])) {
-        ordenedValues.push(totalValueCarts[inner]);
+        const decimalValue = totalValueCarts[inner].total / 100;
+        ordenedValues.push({ ...totalValueCarts[inner], total: decimalValue });
       }
     }
   }
@@ -54,8 +49,19 @@ async function getAllCartValue(supermarkets: any, purchaseValue: any) {
           }
         )
       );
-      return { total: sum, supermarket: supermarket.name };
+      return {
+        total: Number(sum.toFixed(2)) * 100,
+        supermarket: supermarket.name,
+      };
     })
   );
   return result;
+}
+
+export async function getCartProductsQuantify(userId: number) {
+  const cartQuantifyProducts = await cartRepository.getCartProductsQuantify(
+    userId
+  );
+  console.log(cartQuantifyProducts);
+  return cartQuantifyProducts;
 }

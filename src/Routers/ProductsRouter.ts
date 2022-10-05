@@ -3,6 +3,7 @@ import {
   AddProduct,
   GetAllProducts,
   getQuantifyByProduct,
+  GetQuantifyProductisHistoric,
   RemoveAllProducts,
   RemoveOneProduct,
 } from "../Controller/ProductsController";
@@ -18,6 +19,15 @@ productsRouter.get(
   getQuantifyByProduct
 );
 productsRouter.delete("/products/delete", validatingToken, RemoveAllProducts);
-productsRouter.delete("/products/delete/:product", validatingToken, RemoveOneProduct);
+productsRouter.delete(
+  "/products/delete/:product",
+  validatingToken,
+  RemoveOneProduct
+);
+productsRouter.get(
+  "/products/historic",
+  validatingToken,
+  GetQuantifyProductisHistoric
+);
 
 export default productsRouter;
