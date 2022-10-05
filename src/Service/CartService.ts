@@ -1,12 +1,6 @@
 //  * Functions
 import * as cartRepository from "../Repository/CartRepository";
 
-//  # Libs
-
-//  - Types
-
-//  ! Errors
-
 export async function getPurchaseValue(userId: number) {
   const cartProducts = await cartRepository.getCartByUser(userId);
   const supermarkets = await cartRepository.getSupermarkets();
@@ -58,4 +52,12 @@ async function getAllCartValue(supermarkets: any, purchaseValue: any) {
     })
   );
   return result;
+}
+
+export async function getCartProductsQuantify(userId: number) {
+  const cartQuantifyProducts = await cartRepository.getCartProductsQuantify(
+    userId
+  );
+  console.log(cartQuantifyProducts);
+  return cartQuantifyProducts;
 }

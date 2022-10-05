@@ -27,3 +27,10 @@ export async function getPriceBySupermarket(
   });
   return supermarkets;
 }
+
+export async function getCartProductsQuantify(userId: number) {
+  const cartProductsQuantify = await prisma.purchases.count({
+    where: { userId },
+  });
+  return cartProductsQuantify;
+}
