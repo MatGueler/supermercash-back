@@ -11,7 +11,8 @@
     "start": "node dist/src/Server.js",
     "dev": "nodemon ./src/Server.ts",
     "prisma": "npx prisma migrate dev",
-    "test:int": "npx dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest"
+    "test:int": "npx dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest --testPathPattern=tests/Integration",
+    "test:unit": "npx dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest -- -i --coverage"
   },
   "keywords": [],
   "author": "",
