@@ -12,6 +12,11 @@ async function CreateRandomUser() {
   };
 }
 
+async function CreateRandomId() {
+  const id = faker.random.numeric();
+  return Number(id);
+}
+
 async function EncryptPassword(password: string) {
   const SALT = 10;
   const cryptPassword = bcrypt.hashSync(password, SALT);
@@ -36,4 +41,5 @@ async function EncryptPassword(password: string) {
 export const generateFactory = {
   CreateRandomUser,
   EncryptPassword,
+  CreateRandomId,
 };

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.92% </span>
+                <span class="strong">80.7% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>41/57</span>
+                <span class='fraction'>46/57</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">14.28% </span>
+                <span class="strong">67.85% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/28</span>
+                <span class='fraction'>19/28</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.53% </span>
+                <span class="strong">76.92% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/13</span>
+                <span class='fraction'>10/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.92% </span>
+                <span class="strong">80.7% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>41/57</span>
+                <span class='fraction'>46/57</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -222,8 +222,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -260,11 +260,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -345,14 +345,14 @@ export async function loginUser(body: ILoginUser) {
   return { token };
 }
 &nbsp;
-export async function <span class="fstat-no" title="function not covered" >GetUserInfos(</span>userId: number) {
-  const user = <span class="cstat-no" title="statement not covered" >await verifyUserExistById(userId);</span>
-<span class="cstat-no" title="statement not covered" >  return {</span>
-    name: user.name ?? "",
-    email: user.email ?? "",
-    image: user.UserImages ?? "",
-    adress: user.UserAdress ?? "",
-    phone: user.UserPhones ?? "",
+export async function GetUserInfos(userId: number) {
+  const user = await verifyUserExistById(userId);
+  return {
+    name: user.name ?? <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
+    email: user.email ?? <span class="branch-1 cbranch-no" title="branch not covered" >"",</span>
+    image: user.UserImages<span class="branch-0 cbranch-no" title="branch not covered" > ?? "</span>",
+    adress: user.UserAdress<span class="branch-0 cbranch-no" title="branch not covered" > ?? "</span>",
+    phone: user.UserPhones<span class="branch-0 cbranch-no" title="branch not covered" > ?? "</span>",
   };
 }
 &nbsp;
@@ -383,12 +383,12 @@ async function verifyUserExist(email: string, shouldExist: boolean) {
   return user;
 }
 &nbsp;
-export async function <span class="fstat-no" title="function not covered" >verifyUserExistById(</span>userId: number) {
-  const user = <span class="cstat-no" title="statement not covered" >await userRepository.getUserById(userId);</span>
-<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (!user) {</span>
+export async function verifyUserExistById(userId: number) {
+  const user = await userRepository.getUserById(userId);
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!user) {
 <span class="cstat-no" title="statement not covered" >    throw notFoundError("User not found");</span>
   }
-<span class="cstat-no" title="statement not covered" >  return user;</span>
+  return user;
 }
 &nbsp;
 export async function verifyPassword(
@@ -442,7 +442,7 @@ export function generateRefreshToken(userId: number) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-10-06T18:57:37.666Z
+                at 2022-10-06T19:15:58.827Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

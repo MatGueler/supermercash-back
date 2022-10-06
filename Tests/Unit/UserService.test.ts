@@ -33,44 +33,15 @@ describe("Register User", () => {
     expect(userRepository.getUserByEmail).toBeCalled();
     expect(userRepository.insertUser).toBeCalled();
   });
-
-  // it("Doesent create a repeated recomendation", async () => {
-  //   const CreateRecommendationData = {
-  //     name: "string",
-  //     youtubeLink: "https://www.youtube.com/watch?v=lVTsBkLiTck",
-  //   };
-
-  //   // * Mock search recommendations by name
-  //   jest
-  //     .spyOn(recommendationRepository, "findByName")
-  //     .mockImplementationOnce((): any => {
-  //       return CreateRecommendationData;
-  //     });
-
-  //   // * Mock the function that create new recommendation on database
-  //   jest
-  //     .spyOn(recommendationRepository, "create")
-  //     .mockImplementationOnce((): any => {
-  //       return CreateRecommendationData;
-  //     });
-
-  //   const promise = recommendationService.insert(CreateRecommendationData);
-
-  //   //  * Expected that second mock dont be called and exist conflict error
-  //   expect(recommendationRepository.findByName).toBeCalled();
-  //   expect(recommendationRepository.create).not.toBeCalled();
-  //   expect(promise).rejects.toEqual({
-  //     type: "conflict",
-  //     message: "Recommendations names must be unique",
-  //   });
-  // });
 });
 
 //  DONE => TESTE 2
 describe("Login User", () => {
   it("Login user passed", async () => {
     const body = await generateFactory.CreateRandomUser();
-    const encryptedPassword = await generateFactory.EncryptPassword(body.password);
+    const encryptedPassword = await generateFactory.EncryptPassword(
+      body.password
+    );
     console.log({
       ...body,
       password: encryptedPassword,
@@ -99,35 +70,27 @@ describe("Login User", () => {
     expect(userRepository.getUserByEmail).toBeCalled();
     expect(userRepository.loginUser).toBeCalled();
   });
+});
 
-  // it("Doesent create a repeated recomendation", async () => {
-  //   const CreateRecommendationData = {
-  //     name: "string",
-  //     youtubeLink: "https://www.youtube.com/watch?v=lVTsBkLiTck",
-  //   };
+//  DONE => TESTE 3
+describe("Ger user infos", () => {
+  it("Get all user infos", async () => {
+    const body = await generateFactory.CreateRandomUser();
+    const id = await generateFactory.CreateRandomId();
 
-  //   // * Mock search recommendations by name
-  //   jest
-  //     .spyOn(recommendationRepository, "findByName")
-  //     .mockImplementationOnce((): any => {
-  //       return CreateRecommendationData;
-  //     });
+    // *
+    jest
+      .spyOn(userRepository, "getUserById")
+      .mockImplementationOnce((): any => {
+        return {
+          ...body,
+          id,
+        };
+      });
 
-  //   // * Mock the function that create new recommendation on database
-  //   jest
-  //     .spyOn(recommendationRepository, "create")
-  //     .mockImplementationOnce((): any => {
-  //       return CreateRecommendationData;
-  //     });
+    await userService.GetUserInfos(id);
 
-  //   const promise = recommendationService.insert(CreateRecommendationData);
-
-  //   //  * Expected that second mock dont be called and exist conflict error
-  //   expect(recommendationRepository.findByName).toBeCalled();
-  //   expect(recommendationRepository.create).not.toBeCalled();
-  //   expect(promise).rejects.toEqual({
-  //     type: "conflict",
-  //     message: "Recommendations names must be unique",
-  //   });
-  // });
+    // *
+    expect(userRepository.getUserById).toBeCalled();
+  });
 });
