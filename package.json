@@ -11,7 +11,7 @@
     "start": "node dist/src/Server.js",
     "dev": "nodemon ./src/Server.ts",
     "prisma": "npx prisma migrate dev",
-    "test": "npx dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest"
+    "test": "npx dotenv -e .env.test prisma migrate dev"
   },
   "keywords": [],
   "author": "",
