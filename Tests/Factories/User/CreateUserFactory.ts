@@ -12,6 +12,15 @@ async function CreateRandomUser() {
   };
 }
 
+async function CreateRandomUserInfos() {
+  return {
+    name: faker.lorem.words(3),
+    email: faker.internet.email(),
+    adress: faker.random.words(2),
+    phone: faker.random.numeric(11),
+  };
+}
+
 async function CreateRandomId() {
   const id = faker.random.numeric();
   return Number(id);
@@ -42,4 +51,5 @@ export const generateFactory = {
   CreateRandomUser,
   EncryptPassword,
   CreateRandomId,
+  CreateRandomUserInfos,
 };

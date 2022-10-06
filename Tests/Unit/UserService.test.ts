@@ -73,7 +73,7 @@ describe("Login User", () => {
 });
 
 //  DONE => TESTE 3
-describe("Ger user infos", () => {
+describe("Get user infos", () => {
   it("Get all user infos", async () => {
     const body = await generateFactory.CreateRandomUser();
     const id = await generateFactory.CreateRandomId();
@@ -92,5 +92,46 @@ describe("Ger user infos", () => {
 
     // *
     expect(userRepository.getUserById).toBeCalled();
+  });
+});
+
+//  DONE => TESTE 4
+describe("Update user infos", () => {
+  it("Update user infos", async () => {
+    const body = await generateFactory.CreateRandomUserInfos();
+    const id = await generateFactory.CreateRandomId();
+
+    // *
+    jest
+      .spyOn(userRepository, "getUserById")
+      .mockImplementationOnce((): any => {
+        return {
+          ...body,
+          id,
+        };
+      });
+
+    // *
+    jest
+      .spyOn(userRepository, "updateUserInfo")
+      .mockImplementationOnce((): any => {});
+
+    // *
+    jest
+      .spyOn(userRepository, "updateUserAdress")
+      .mockImplementationOnce((): any => {});
+
+    // *
+    jest
+      .spyOn(userRepository, "updateUserPhone")
+      .mockImplementationOnce((): any => {});
+
+    await userService.updateUserInfo(body, id);
+
+    // *
+    expect(userRepository.getUserById).toBeCalled();
+    expect(userRepository.updateUserInfo).toBeCalled();
+    expect(userRepository.updateUserAdress).toBeCalled();
+    expect(userRepository.updateUserPhone).toBeCalled();
   });
 });

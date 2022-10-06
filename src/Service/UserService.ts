@@ -43,10 +43,6 @@ export async function GetUserInfos(userId: number) {
   };
 }
 
-async function createUser(body: IRegisterUser) {
-  await userRepository.insertUser(body);
-}
-
 export async function updateUserInfo(body: IUpdateUser, userId: number) {
   await verifyUserExistById(userId);
   await updateAllUserInfo(body, userId);
@@ -55,43 +51,6 @@ export async function updateUserInfo(body: IUpdateUser, userId: number) {
 export async function updateUserImage(urlImage: string, userId: number) {
   await verifyUserExistById(userId);
   await userRepository.updateUserImage(urlImage, userId);
-}
-
-//  * verifyUserExist function recive two params, email and a boolean, if user sould exist boolean is true, if must not exist is false
-
-async function verifyUserExist(email: string, shouldExist: boolean) {
-  const user = await userRepository.getUserByEmail(email);
-  if (user && shouldExist === false) {
-    throw unauthorizedError("Unable to create account");
-  }
-  if (!user && shouldExist === true) {
-    throw notFoundError("User not found");
-  }
-  return user;
-}
-
-export async function verifyUserExistById(userId: number) {
-  const user = await userRepository.getUserById(userId);
-  if (!user) {
-    throw notFoundError("User not found");
-  }
-  return user;
-}
-
-export async function verifyPassword(
-  password: string,
-  encryptedPassword: string
-) {
-  const verifyPassword = bcrypt.compareSync(password, encryptedPassword);
-  if (!verifyPassword) {
-    throw unauthorizedError("User or password are incorrect");
-  }
-}
-
-async function updateAllUserInfo(body: IUpdateUser, userId: number) {
-  await userRepository.updateUserInfo(body.name, body.email, userId);
-  await userRepository.updateUserAdress(body.adress, userId);
-  await userRepository.updateUserPhone(body.phone, userId);
 }
 
 // - Aux functions
@@ -121,4 +80,44 @@ export function generateRefreshToken(userId: number) {
     expiresIn: TIME_JWT_REFRESH,
   });
   return token;
+}
+
+//  * VerifyUserExist function recive two params, email and a boolean, if user sould exist boolean is true, if must not exist is false
+async function verifyUserExist(email: string, shouldExist: boolean) {
+  const user = await userRepository.getUserByEmail(email);
+  if (user && shouldExist === false) {
+    throw unauthorizedError("Unable to create account");
+  }
+  if (!user && shouldExist === true) {
+    throw notFoundError("User not found");
+  }
+  return user;
+}
+
+async function createUser(body: IRegisterUser) {
+  await userRepository.insertUser(body);
+}
+
+export async function verifyUserExistById(userId: number) {
+  const user = await userRepository.getUserById(userId);
+  if (!user) {
+    throw notFoundError("User not found");
+  }
+  return user;
+}
+
+export async function verifyPassword(
+  password: string,
+  encryptedPassword: string
+) {
+  const verifyPassword = bcrypt.compareSync(password, encryptedPassword);
+  if (!verifyPassword) {
+    throw unauthorizedError("User or password are incorrect");
+  }
+}
+
+async function updateAllUserInfo(body: IUpdateUser, userId: number) {
+  await userRepository.updateUserInfo(body.name, body.email, userId);
+  await userRepository.updateUserAdress(body.adress, userId);
+  await userRepository.updateUserPhone(body.phone, userId);
 }

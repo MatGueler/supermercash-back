@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1665083758880" clover="3.2.0">
-  <project timestamp="1665083758880" name="All files">
-    <metrics statements="104" coveredstatements="75" conditionals="48" coveredconditionals="19" methods="30" coveredmethods="13" elements="182" coveredelements="107" complexity="0" loc="104" ncloc="104" packages="5" files="5" classes="5"/>
+<coverage generated="1665086007874" clover="3.2.0">
+  <project timestamp="1665086007874" name="All files">
+    <metrics statements="105" coveredstatements="81" conditionals="48" coveredconditionals="19" methods="31" coveredmethods="16" elements="184" coveredelements="116" complexity="0" loc="105" ncloc="105" packages="5" files="5" classes="5"/>
     <package name="Tests.Factories.User">
-      <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
       <file name="CreateUserFactory.ts" path="/home/mateus/Área de Trabalho/DRIVEN/Projetos/Fullstack/supermercash/back/Tests/Factories/User/CreateUserFactory.ts">
-        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
         <line num="7" count="3" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.Database">
@@ -52,9 +53,9 @@
       </file>
     </package>
     <package name="src.Service">
-      <metrics statements="57" coveredstatements="46" conditionals="28" coveredconditionals="19" methods="13" coveredmethods="10"/>
+      <metrics statements="57" coveredstatements="51" conditionals="28" coveredconditionals="19" methods="13" coveredmethods="12"/>
       <file name="UserService.ts" path="/home/mateus/Área de Trabalho/DRIVEN/Projetos/Fullstack/supermercash/back/src/Service/UserService.ts">
-        <metrics statements="57" coveredstatements="46" conditionals="28" coveredconditionals="19" methods="13" coveredmethods="10"/>
+        <metrics statements="57" coveredstatements="51" conditionals="28" coveredconditionals="19" methods="13" coveredmethods="12"/>
         <line num="2" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -74,44 +75,44 @@
         <line num="35" count="1" type="stmt"/>
         <line num="36" count="1" type="stmt"/>
         <line num="37" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
         <line num="47" count="1" type="stmt"/>
-        <line num="50" count="1" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
+        <line num="48" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
         <line num="52" count="0" type="stmt"/>
-        <line num="55" count="1" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="63" count="2" type="stmt"/>
-        <line num="64" count="2" type="cond" truecount="2" falsecount="1"/>
-        <line num="65" count="0" type="stmt"/>
-        <line num="67" count="2" type="cond" truecount="2" falsecount="1"/>
-        <line num="68" count="0" type="stmt"/>
-        <line num="70" count="2" type="stmt"/>
-        <line num="73" count="1" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
         <line num="74" count="1" type="stmt"/>
-        <line num="75" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="76" count="0" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
         <line num="78" count="1" type="stmt"/>
-        <line num="81" count="1" type="stmt"/>
-        <line num="85" count="1" type="stmt"/>
-        <line num="86" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="87" count="0" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="87" count="2" type="stmt"/>
+        <line num="88" count="2" type="cond" truecount="2" falsecount="1"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="91" count="2" type="cond" truecount="2" falsecount="1"/>
         <line num="92" count="0" type="stmt"/>
-        <line num="93" count="0" type="stmt"/>
-        <line num="94" count="0" type="stmt"/>
-        <line num="100" count="1" type="stmt"/>
+        <line num="94" count="2" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
         <line num="101" count="1" type="stmt"/>
-        <line num="102" count="1" type="stmt"/>
-        <line num="105" count="1" type="stmt"/>
-        <line num="106" count="1" type="stmt"/>
-        <line num="107" count="1" type="stmt"/>
-        <line num="108" count="1" type="stmt"/>
-        <line num="115" count="1" type="stmt"/>
-        <line num="117" count="1" type="stmt"/>
-        <line num="118" count="1" type="stmt"/>
-        <line num="119" count="1" type="stmt"/>
+        <line num="102" count="2" type="stmt"/>
+        <line num="103" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="104" count="0" type="stmt"/>
+        <line num="106" count="2" type="stmt"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="113" count="1" type="stmt"/>
+        <line num="114" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="115" count="0" type="stmt"/>
         <line num="120" count="1" type="stmt"/>
-        <line num="123" count="1" type="stmt"/>
+        <line num="121" count="1" type="stmt"/>
+        <line num="122" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.Utils">
