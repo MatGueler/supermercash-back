@@ -12,7 +12,7 @@
     "dev": "nodemon ./src/Server.ts",
     "prisma": "npx prisma migrate dev",
     "test:int": "npx dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest --testPathPattern=tests/Integration",
-    "test:unit": "npx dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest -- -i --coverage"
+    "test:unit": "npx dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest -- -i --coverage --testPathPattern=tests/Unit"
   },
   "keywords": [],
   "author": "",

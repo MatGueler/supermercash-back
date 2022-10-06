@@ -1,5 +1,6 @@
 import prisma from "../../../src/Database/Prisma";
 import { faker } from "@faker-js/faker";
+import bcrypt from "bcrypt";
 
 async function CreateRandomUser() {
   const password = faker.lorem.word(6);
@@ -9,6 +10,12 @@ async function CreateRandomUser() {
     password,
     confirmPassword: password,
   };
+}
+
+async function EncryptPassword(password: string) {
+  const SALT = 10;
+  const cryptPassword = bcrypt.hashSync(password, SALT);
+  return cryptPassword;
 }
 
 // async function createRandomRecomendationAndPost() {
@@ -28,4 +35,5 @@ async function CreateRandomUser() {
 
 export const generateFactory = {
   CreateRandomUser,
+  EncryptPassword,
 };
