@@ -1,6 +1,4 @@
 import dotenv from "dotenv";
-import { registerUser } from "../../src/Service/UserService";
-import { getUserByEmail } from "../../src/Repository/UserRepository";
 import { generateFactory } from "../Factories/User/CreateUserFactory";
 import * as userRepository from "../../src/Repository/UserRepository";
 import * as userService from "../../src/Service/UserService";
@@ -27,11 +25,44 @@ describe("Register User", () => {
       .spyOn(userRepository, "insertUser")
       .mockImplementationOnce((): any => {});
 
-    await registerUser(body);
+    await userService.registerUser(body);
 
     // *
     expect(userRepository.getUserByEmail).toBeCalled();
     expect(userRepository.insertUser).toBeCalled();
+  });
+
+  it("Try register if a user already exist", async () => {
+    const body = await generateFactory.CreateRandomUser();
+    const encryptedPassword = await generateFactory.EncryptPassword(
+      body.password
+    );
+
+    // *
+    jest
+      .spyOn(userRepository, "getUserByEmail")
+      .mockImplementationOnce((): any => {
+        return {
+          ...body,
+          password: encryptedPassword,
+          id: 1,
+        };
+      });
+
+    // *
+    jest
+      .spyOn(userRepository, "insertUser")
+      .mockImplementationOnce((): any => {});
+
+    const promise = userService.registerUser(body);
+
+    // *
+    expect(userRepository.getUserByEmail).toBeCalled();
+    expect(userRepository.insertUser).not.toBeCalled();
+    expect(promise).rejects.toEqual({
+      type: "unauthorized",
+      message: "Unable to create account",
+    });
   });
 });
 
@@ -42,11 +73,6 @@ describe("Login User", () => {
     const encryptedPassword = await generateFactory.EncryptPassword(
       body.password
     );
-    console.log({
-      ...body,
-      password: encryptedPassword,
-      id: 1,
-    });
 
     // *
     jest
