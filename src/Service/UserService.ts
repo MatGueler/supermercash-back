@@ -9,13 +9,18 @@ import jwt from "jsonwebtoken";
 import { IRegisterUser } from "../Types/RegisterTypes";
 
 //  ! Errors
-import { notFoundError, unauthorizedError } from "../Utils/ErrorUtils";
+import {
+  conflictError,
+  notFoundError,
+  unauthorizedError,
+} from "../Utils/ErrorUtils";
 import { ILoginUser } from "../Types/LoginTypes";
 import { IUpdateUser, IUpdateUserImage } from "../Types/UpdateUserTypes";
 
 export async function registerUser(body: IRegisterUser) {
   // # User should not exist
   await verifyUserExist(body.email, false);
+  await comparePasswords(body);
   const encryptedPassword = encryptPassword(body.password);
   // * Remove property confirmPassword of body
   delete body.confirmPassword;
@@ -120,4 +125,10 @@ async function updateAllUserInfo(body: IUpdateUser, userId: number) {
   await userRepository.updateUserInfo(body.name, body.email, userId);
   await userRepository.updateUserAdress(body.adress, userId);
   await userRepository.updateUserPhone(body.phone, userId);
+}
+
+async function comparePasswords(body: IRegisterUser) {
+  if (body.password !== body.confirmPassword) {
+    throw conflictError("Passwords are differents");
+  }
 }
