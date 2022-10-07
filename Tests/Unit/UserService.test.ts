@@ -96,6 +96,30 @@ describe("Login User", () => {
     expect(userRepository.getUserByEmail).toBeCalled();
     expect(userRepository.loginUser).toBeCalled();
   });
+
+  it("Login user passed", async () => {
+    const body = await generateFactory.CreateRandomUser();
+
+    // *
+    jest
+      .spyOn(userRepository, "getUserByEmail")
+      .mockImplementationOnce((): any => {});
+
+    // *
+    jest
+      .spyOn(userRepository, "loginUser")
+      .mockImplementationOnce((): any => {});
+
+    const promise = userService.loginUser(body);
+
+    // *
+    expect(userRepository.getUserByEmail).toBeCalled();
+    expect(userRepository.loginUser).not.toBeCalled();
+    expect(promise).rejects.toEqual({
+      type: "not_found",
+      message: "User not found",
+    });
+  });
 });
 
 //  DONE => TESTE 3
