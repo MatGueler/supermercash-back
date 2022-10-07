@@ -21,6 +21,10 @@ async function CreateRandomUserInfos() {
   };
 }
 
+async function CreateUrlImage() {
+  return String(faker.internet.url);
+}
+
 async function CreateRandomId() {
   const id = faker.random.numeric();
   return Number(id);
@@ -52,4 +56,5 @@ export const generateFactory = {
   EncryptPassword,
   CreateRandomId,
   CreateRandomUserInfos,
+  CreateUrlImage,
 };

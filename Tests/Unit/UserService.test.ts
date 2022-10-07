@@ -135,3 +135,33 @@ describe("Update user infos", () => {
     expect(userRepository.updateUserPhone).toBeCalled();
   });
 });
+
+//  DONE => TESTE 5
+describe("Update user image", () => {
+  it("Update user image", async () => {
+    const body = await generateFactory.CreateRandomUser();
+    const urlImage = await generateFactory.CreateUrlImage();
+    const id = await generateFactory.CreateRandomId();
+
+    // *
+    jest
+      .spyOn(userRepository, "getUserById")
+      .mockImplementationOnce((): any => {
+        return {
+          ...body,
+          id,
+        };
+      });
+
+    // *
+    jest
+      .spyOn(userRepository, "updateUserImage")
+      .mockImplementationOnce((): any => {});
+
+    await userService.updateUserImage(urlImage, id);
+
+    // *
+    expect(userRepository.getUserById).toBeCalled();
+    expect(userRepository.updateUserImage).toBeCalled();
+  });
+});
