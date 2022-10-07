@@ -175,6 +175,25 @@ describe("Get user infos", () => {
     // *
     expect(userRepository.getUserById).toBeCalled();
   });
+
+  it("Error to userId not existing", async () => {
+    const body = await generateFactory.CreateRandomUser();
+    const id = await generateFactory.CreateRandomId();
+
+    // *
+    jest
+      .spyOn(userRepository, "getUserById")
+      .mockImplementationOnce((): any => {});
+
+    const promise = userService.GetUserInfos(id);
+
+    // *
+    expect(userRepository.getUserById).toBeCalled();
+    expect(promise).rejects.toEqual({
+      type: "not_found",
+      message: "User not found",
+    });
+  });
 });
 
 //  DONE => TESTE 4
