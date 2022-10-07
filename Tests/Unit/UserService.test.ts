@@ -97,7 +97,7 @@ describe("Login User", () => {
     expect(userRepository.loginUser).toBeCalled();
   });
 
-  it("Login user passed", async () => {
+  it("Login not existing", async () => {
     const body = await generateFactory.CreateRandomUser();
 
     // *
@@ -118,6 +118,38 @@ describe("Login User", () => {
     expect(promise).rejects.toEqual({
       type: "not_found",
       message: "User not found",
+    });
+  });
+
+  it("Login with differents passwords", async () => {
+    const body = await generateFactory.CreateRandomUser();
+    const encryptedPassword = await generateFactory.EncryptPassword(
+      body.password
+    );
+
+    // *
+    jest
+      .spyOn(userRepository, "getUserByEmail")
+      .mockImplementationOnce((): any => {
+        return {
+          ...body,
+          id: 1,
+        };
+      });
+
+    // *
+    jest
+      .spyOn(userRepository, "loginUser")
+      .mockImplementationOnce((): any => {});
+
+    const promise = userService.loginUser(body);
+
+    // *
+    expect(userRepository.getUserByEmail).toBeCalled();
+    expect(userRepository.loginUser).not.toBeCalled();
+    expect(promise).rejects.toEqual({
+      type: "unauthorized",
+      message: "User or password are incorrect",
     });
   });
 });
