@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   AddProduct,
   GetAllProducts,
+  getListProducts,
   getQuantifyByProduct,
   GetQuantifyProductisHistoric,
   RemoveAllProducts,
@@ -18,6 +19,7 @@ productsRouter.get(
   validatingToken,
   getQuantifyByProduct
 );
+productsRouter.get("/products/:product", getListProducts);
 productsRouter.delete("/products/delete", validatingToken, RemoveAllProducts);
 productsRouter.delete(
   "/products/delete/:product",

@@ -12,6 +12,12 @@ export async function getAllProducts() {
   const products = await productsRepository.getAllProducts();
   return products;
 }
+
+export async function getListProductsByName(name: string) {
+  const products = await productsRepository.getListProductsByName(name);
+  return products;
+}
+
 export async function getQuantifyProductisHistoric(userId: number) {
   const products = await productsRepository.getQuantifyProductisHistoric(
     userId
