@@ -3,7 +3,7 @@ import prisma from "../src/Database/Prisma";
 async function main() {
   createProducts();
   createSupermarkets();
-  // createProductsMarkets();
+  createProductsMarkets();
 }
 async function createSupermarkets() {
   await prisma.supermarkets.upsert({
