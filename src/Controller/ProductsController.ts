@@ -8,8 +8,8 @@ export async function GetAllProducts(req: Request, res: Response) {
 
 export async function getOneProductById(req: Request, res: Response) {
   const id: string = req.params.id;
-  const products = await productsService.getProduct(Number(id));
-  res.status(200).send(products);
+  const product = await productsService.getProduct(Number(id));
+  res.status(200).send(product[0]);
 }
 
 export async function getListProducts(req: Request, res: Response) {
