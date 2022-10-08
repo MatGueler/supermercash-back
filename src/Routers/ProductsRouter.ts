@@ -14,6 +14,11 @@ import { GetProductById } from "../Repository/ProductsRepository";
 
 const productsRouter = Router();
 
+productsRouter.get(
+  "/products/historic",
+  validatingToken,
+  GetQuantifyProductisHistoric
+);
 productsRouter.get("/products", GetAllProducts);
 productsRouter.get("/product/:id", getOneProductById);
 productsRouter.post("/products", validatingToken, AddProduct);
@@ -28,11 +33,6 @@ productsRouter.delete(
   "/products/delete/:product",
   validatingToken,
   RemoveOneProduct
-);
-productsRouter.get(
-  "/products/historic",
-  validatingToken,
-  GetQuantifyProductisHistoric
 );
 
 export default productsRouter;
