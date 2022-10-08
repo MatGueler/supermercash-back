@@ -8,7 +8,16 @@ GROUP BY p."productId",products.name,products."urlImage"`;
   return products;
 }
 
-export async function getListProductsByName(name:string) {
+export async function GetProductById(id: number) {
+  const products = await prisma.$queryRaw`
+SELECT AVG(p.price) as "precoMedio", products.name,products."urlImage" FROM "productsMarkets" p
+JOIN products ON p."productId"=products.id
+WHERE products.id=${id}
+GROUP BY p."productId",products.name,products."urlImage"`;
+  return products;
+}
+
+export async function getListProductsByName(name: string) {
   const products = prisma.products.findMany({
     where: {
       name: {

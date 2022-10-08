@@ -3,16 +3,19 @@ import {
   AddProduct,
   GetAllProducts,
   getListProducts,
+  getOneProductById,
   getQuantifyByProduct,
   GetQuantifyProductisHistoric,
   RemoveAllProducts,
   RemoveOneProduct,
 } from "../Controller/ProductsController";
 import { validatingToken } from "../Middlewares/ValidateToken";
+import { GetProductById } from "../Repository/ProductsRepository";
 
 const productsRouter = Router();
 
 productsRouter.get("/products", GetAllProducts);
+productsRouter.get("/product/:id", getOneProductById);
 productsRouter.post("/products", validatingToken, AddProduct);
 productsRouter.get(
   "/products/quantify/:product",

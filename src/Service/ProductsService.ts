@@ -13,6 +13,11 @@ export async function getAllProducts() {
   return products;
 }
 
+export async function getProduct(id: number) {
+  const products = await productsRepository.GetProductById(id);
+  return products;
+}
+
 export async function getListProductsByName(name: string) {
   const products = await productsRepository.getListProductsByName(name);
   return products;

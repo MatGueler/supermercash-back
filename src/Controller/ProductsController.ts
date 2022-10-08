@@ -6,6 +6,12 @@ export async function GetAllProducts(req: Request, res: Response) {
   res.status(200).send(products);
 }
 
+export async function getOneProductById(req: Request, res: Response) {
+  const id: string = req.params.id;
+  const products = await productsService.getProduct(Number(id));
+  res.status(200).send(products);
+}
+
 export async function getListProducts(req: Request, res: Response) {
   const name: string = req.params.product;
   const products = await productsService.getListProductsByName(name);
