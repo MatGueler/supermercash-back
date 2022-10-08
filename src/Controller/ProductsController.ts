@@ -6,6 +6,18 @@ export async function GetAllProducts(req: Request, res: Response) {
   res.status(200).send(products);
 }
 
+export async function getOneProductById(req: Request, res: Response) {
+  const id: string = req.params.id;
+  const product = await productsService.getProduct(Number(id));
+  res.status(200).send(product[0]);
+}
+
+export async function getListProducts(req: Request, res: Response) {
+  const name: string = req.params.product;
+  const products = await productsService.getListProductsByName(name);
+  res.status(200).send(products);
+}
+
 export async function AddProduct(req: Request, res: Response) {
   const body: { name: string } = req.body;
   const userId: number = res.locals.userId;
@@ -33,10 +45,11 @@ export async function getQuantifyByProduct(req: Request, res: Response) {
   res.status(200).send(quantify);
 }
 
-export async function GetQuantifyProductisHistoric(req: Request, res: Response) {
+export async function GetQuantifyProductisHistoric(
+  req: Request,
+  res: Response
+) {
   const userId: number = res.locals.userId;
-  const quantify = await productsService.getQuantifyProductisHistoric(
-    userId
-  );
+  const quantify = await productsService.getQuantifyProductisHistoric(userId);
   res.status(200).send(quantify);
 }
