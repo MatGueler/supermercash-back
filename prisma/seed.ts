@@ -1,9 +1,9 @@
 import prisma from "../src/Database/Prisma";
 
 async function main() {
-  createProducts();
-  createSupermarkets();
-  createProductsMarkets();
+  await createProducts();
+  await createSupermarkets();
+  await createProductsMarkets();
 }
 async function createSupermarkets() {
   await prisma.supermarkets.upsert({
@@ -39,6 +39,18 @@ async function createSupermarkets() {
 }
 
 async function createProducts() {
+  await prisma.products.upsert({
+    where: {
+      name: "Sucrilhos",
+    },
+    update: {},
+    create: {
+      name: "Sucrilhos",
+      urlImage:
+        "https://http2.mlstatic.com/D_NQ_NP_2X_858458-MLA45994361397_052021-V.webp",
+    },
+  });
+
   await prisma.products.upsert({
     where: {
       name: "Negresco",
@@ -107,18 +119,6 @@ async function createProducts() {
       name: "Skol lata",
       urlImage:
         "https://www.bistek.com.br/media/catalog/product/cache/15b2f1f06e1cd470c80b1f3fd7ec8301/9/9/990574.jpg",
-    },
-  });
-
-  await prisma.products.upsert({
-    where: {
-      name: "Sucrilhos",
-    },
-    update: {},
-    create: {
-      name: "Sucrilhos",
-      urlImage:
-        "https://http2.mlstatic.com/D_NQ_NP_2X_858458-MLA45994361397_052021-V.webp",
     },
   });
 }
