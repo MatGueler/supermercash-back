@@ -10,6 +10,7 @@ export async function getPurchaseValue(userId: number) {
 }
 
 async function orderValuesCarts(totalValueCarts: any) {
+  // console.log(totalValueCarts);
   let hashTable = {};
   const ordenedValues = [];
   for (let counter = 0; counter < totalValueCarts.length; counter++) {
@@ -32,7 +33,7 @@ async function orderValuesCarts(totalValueCarts: any) {
 async function getAllCartValue(supermarkets: any, purchaseValue: any) {
   const result = await Promise.all(
     supermarkets.map(async (supermarket: { id: number; name: string }) => {
-      let sum = 0;
+      let sum: number = 0;
       const value = await Promise.all(
         purchaseValue.map(
           async (item: {
@@ -45,12 +46,13 @@ async function getAllCartValue(supermarkets: any, purchaseValue: any) {
               supermarket.id,
               item.productId
             );
+            // sum += Number(getPrice.price) * Number(item.quantify);
             sum += Number(getPrice.price) * Number(item.quantify);
           }
         )
       );
       return {
-        total: Number(sum.toFixed(2)) * 100,
+        total: Math.round(Number(sum.toFixed(2)) * 100),
         supermarket: supermarket.name,
       };
     })
