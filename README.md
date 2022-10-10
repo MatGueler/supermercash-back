@@ -214,6 +214,11 @@ Finished the process, just start the server
 npm run dev
 ```
 
+To populate the database locally with products and markets use the command below
+
+```
+npx prisma db seed
+```
 ---
 
 ## :hammer: Testing the application
