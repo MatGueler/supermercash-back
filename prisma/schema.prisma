@@ -8,15 +8,16 @@ datasource db {
 }
 
 model Users {
-  id         Int         @id @default(autoincrement())
-  name       String
-  email      String      @unique
-  password   String
-  Purchases  Purchases[]
-  Sessions   Sessions[]
-  UserAdress UserAdress?
-  UserImages UserImages?
-  UserPhones UserPhones?
+  id          Int           @id @default(autoincrement())
+  name        String
+  email       String        @unique
+  password    String
+  Purchases   Purchases[]
+  Sessions    Sessions[]
+  UserAdress  UserAdress?
+  UserImages  UserImages?
+  UserPhones  UserPhones?
+  Assessments Assessments[]
 
   @@map("users")
 }
@@ -107,8 +108,27 @@ model Historic {
 }
 
 model Questions {
-  id       Int    @id @default(autoincrement())
+  id       Int      @id @default(autoincrement())
   question String
+  Answers  Answers?
 
   @@map("questions")
+}
+
+model Answers {
+  id         Int       @id @default(autoincrement())
+  questionId Int       @unique
+  question   Questions @relation(fields: [questionId], references: [id])
+  answer     String
+
+  @@map("answers")
+}
+
+model Assessments {
+  id         Int   @id @default(autoincrement())
+  userId     Int
+  user       Users @relation(fields: [userId], references: [id])
+  questionId Int
+
+  @@map("assessments")
 }
