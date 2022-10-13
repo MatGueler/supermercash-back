@@ -3,5 +3,5 @@ import { Request, Response } from "express";
 
 export async function GetAllQuestionsWithAnswers(req: Request, res: Response) {
   const questions = await questionsService.getAllQuestions();
-  res.status(200).send('questions');
+  res.status(200).send(questions);
 }
