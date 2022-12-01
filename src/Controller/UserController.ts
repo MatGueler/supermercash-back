@@ -39,12 +39,24 @@ export async function UpdateUserImage(req: Request, res: Response) {
 
 export async function OAuthRegister(req: Request, res: Response) {
   const code = req.body.code;
-  const user = await userService.OAuthRegisterAndLogin(code);
-  res.status(201).send(user);
+  const token = await userService.OAuthRegisterAndLogin(code);
+  res.status(201).send(token);
 }
 
 export async function OAuthLogin(req: Request, res: Response) {
   const code = req.body.code;
   const user = await userService.OAuthLogin(code);
-  res.status(201).send(user);
+  res.status(200).send(user);
+}
+
+export async function OAuthLoginGoogle(req: Request, res: Response) {
+  const userInfos = req.body.user;
+  const token = await userService.OAuthLoginGoogle(userInfos);
+  res.status(200).send(token);
+}
+
+export async function OAuthRegisterGoogle(req: Request, res: Response) {
+  const userInfos = req.body.user;
+  const token = await userService.OAuthRegisterAndLoginWithGoogle(userInfos);
+  res.status(201).send(token);
 }

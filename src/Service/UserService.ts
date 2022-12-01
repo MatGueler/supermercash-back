@@ -60,6 +60,7 @@ export async function updateUserImage(urlImage: string, userId: number) {
   await userRepository.updateUserImage(urlImage, userId);
 }
 
+// #Oauth with github
 export async function OAuthLogin(code: any) {
   const tokenGitHub = await exchangeCodeForAccessTokenLogin(code);
   const userInfosGitHub = await fetchUser(tokenGitHub);
@@ -84,6 +85,34 @@ export async function OAuthRegisterAndLogin(code: any) {
     password: encryptedPassword,
   });
   await updateUserImage(userInfosGitHub.avatar_url, newUser.id);
+
+  const token = generateToken(newUser.id);
+  const refreshToken = generateRefreshToken(newUser.id);
+  await userRepository.loginUser(token, refreshToken, newUser.id);
+  return token;
+}
+
+// # Oauth with google
+export async function OAuthLoginGoogle(userGoogle: any) {
+  const user = await verifyUserExist(userGoogle.cu, true);
+  const token = generateToken(user.id);
+  const refreshToken = generateRefreshToken(user.id);
+  await userRepository.loginUser(token, refreshToken, user.id);
+  return token;
+}
+
+export async function OAuthRegisterAndLoginWithGoogle(userGoogle: any) {
+  await verifyUserExist(userGoogle.cu, false);
+
+  const password: string = generateRandomicPassword();
+  const encryptedPassword = encryptPassword(password);
+
+  const newUser = await createUser({
+    name: userGoogle.Ad,
+    email: userGoogle.cu,
+    password: encryptedPassword,
+  });
+  await updateUserImage(userGoogle.hK, newUser.id);
 
   const token = generateToken(newUser.id);
   const refreshToken = generateRefreshToken(newUser.id);

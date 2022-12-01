@@ -3,7 +3,9 @@ import {
   GetUserInfos,
   LoginUser,
   OAuthLogin,
+  OAuthLoginGoogle,
   OAuthRegister,
+  OAuthRegisterGoogle,
   RegisterUser,
   UpdateUserImage,
   UpdateUsersInfo,
@@ -34,6 +36,8 @@ userRouter
     UpdateUserImage
   )
   .post("/login", OAuthLogin)
-  .post("/auth/register", OAuthRegister);
+  .post("/auth/register", OAuthRegister)
+  .post("/auth/google", OAuthLoginGoogle)
+  .post("/auth/register/google", OAuthRegisterGoogle);
 
 export default userRouter;
