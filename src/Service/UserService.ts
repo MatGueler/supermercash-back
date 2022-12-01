@@ -61,7 +61,7 @@ export async function updateUserImage(urlImage: string, userId: number) {
 }
 
 export async function OAuthLogin(code: any) {
-  const tokenGitHub = await exchangeCodeForAccessToken(code);
+  const tokenGitHub = await exchangeCodeForAccessTokenLogin(code);
   const userInfosGitHub = await fetchUser(tokenGitHub);
   const user = await verifyUserExist(userInfosGitHub.email, true);
   const token = generateToken(user.id);
@@ -70,17 +70,59 @@ export async function OAuthLogin(code: any) {
   return token;
 }
 
+export async function OAuthRegisterAndLogin(code: any) {
+  const tokenGitHub = await exchangeCodeForAccessTokenRegister(code);
+  const userInfosGitHub = await fetchUser(tokenGitHub);
+  await verifyUserExist(userInfosGitHub.email, false);
+
+  const password: string = generateRandomicPassword();
+  const encryptedPassword = encryptPassword(password);
+
+  const newUser = await createUser({
+    name: userInfosGitHub.name,
+    email: userInfosGitHub.email,
+    password: encryptedPassword,
+  });
+  await updateUserImage(userInfosGitHub.avatar_url, newUser.id);
+
+  const token = generateToken(newUser.id);
+  const refreshToken = generateRefreshToken(newUser.id);
+  await userRepository.loginUser(token, refreshToken, newUser.id);
+  return token;
+}
+
 // - Aux functions
 
-async function exchangeCodeForAccessToken(code: any) {
+async function exchangeCodeForAccessTokenRegister(code: any) {
   const GITHUB_ACCESS_TOKEN_URL = "https://github.com/login/oauth/access_token";
-  const { REDIRECT_URL, CLIENT_ID, CLIENT_SECRET } = process.env;
+  const { REDIRECT_URL_REGISTER, CLIENT_ID_REGISTER, CLIENT_SECRET_REGISTER } =
+    process.env;
   const params = {
     code,
     grant_type: "authorization_code",
-    redirect_uri: REDIRECT_URL,
-    client_id: CLIENT_ID,
-    client_secret: CLIENT_SECRET,
+    redirect_uri: REDIRECT_URL_REGISTER,
+    client_id: CLIENT_ID_REGISTER,
+    client_secret: CLIENT_SECRET_REGISTER,
+  };
+  const { data } = await axios.post(GITHUB_ACCESS_TOKEN_URL, params, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const parsedData = qs.parse(data);
+  return parsedData.access_token;
+}
+
+async function exchangeCodeForAccessTokenLogin(code: any) {
+  const GITHUB_ACCESS_TOKEN_URL = "https://github.com/login/oauth/access_token";
+  const { REDIRECT_URL_LOGIN, CLIENT_ID_LOGIN, CLIENT_SECRET_LOGIN } =
+    process.env;
+  const params = {
+    code,
+    grant_type: "authorization_code",
+    redirect_uri: REDIRECT_URL_LOGIN,
+    client_id: CLIENT_ID_LOGIN,
+    client_secret: CLIENT_SECRET_LOGIN,
   };
   const { data } = await axios.post(GITHUB_ACCESS_TOKEN_URL, params, {
     headers: {
@@ -142,7 +184,7 @@ async function verifyUserExist(email: string, shouldExist: boolean) {
 }
 
 async function createUser(body: IRegisterUser) {
-  await userRepository.insertUser(body);
+  return await userRepository.insertUser(body);
 }
 
 export async function verifyUserExistById(userId: number) {
@@ -173,4 +215,8 @@ async function comparePasswords(body: IRegisterUser) {
   if (body.password !== body.confirmPassword) {
     throw conflictError("Passwords are differents");
   }
+}
+
+function generateRandomicPassword() {
+  return Math.random().toString(36).slice(-10);
 }

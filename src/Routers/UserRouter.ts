@@ -3,6 +3,7 @@ import {
   GetUserInfos,
   LoginUser,
   OAuthLogin,
+  OAuthRegister,
   RegisterUser,
   UpdateUserImage,
   UpdateUsersInfo,
@@ -32,6 +33,7 @@ userRouter
     validateSchema(UpdateUserImageSchema),
     UpdateUserImage
   )
-  .post("/login", OAuthLogin);
+  .post("/login", OAuthLogin)
+  .post("/auth/register", OAuthRegister);
 
 export default userRouter;

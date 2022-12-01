@@ -37,6 +37,12 @@ export async function UpdateUserImage(req: Request, res: Response) {
   res.sendStatus(201);
 }
 
+export async function OAuthRegister(req: Request, res: Response) {
+  const code = req.body.code;
+  const user = await userService.OAuthRegisterAndLogin(code);
+  res.status(201).send(user);
+}
+
 export async function OAuthLogin(req: Request, res: Response) {
   const code = req.body.code;
   const user = await userService.OAuthLogin(code);
