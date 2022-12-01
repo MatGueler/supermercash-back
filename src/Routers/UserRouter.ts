@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   GetUserInfos,
   LoginUser,
+  OAuthLogin,
   RegisterUser,
   UpdateUserImage,
   UpdateUsersInfo,
@@ -15,20 +16,22 @@ import UpdateUserImageSchema from "../Schemas/UpdateUserImageSchema";
 
 const userRouter = Router();
 
-userRouter.post("/sign-up", validateSchema(registerSchema), RegisterUser);
-userRouter.post("/sign-in", validateSchema(loginSchema), LoginUser);
-userRouter.get("/user/me", validatingToken, GetUserInfos);
-userRouter.put(
-  "/user/me",
-  validatingToken,
-  validateSchema(UpdateUserSchema),
-  UpdateUsersInfo
-);
-userRouter.put(
-  "/user/me/image",
-  validatingToken,
-  validateSchema(UpdateUserImageSchema),
-  UpdateUserImage
-);
+userRouter
+  .post("/sign-up", validateSchema(registerSchema), RegisterUser)
+  .post("/sign-in", validateSchema(loginSchema), LoginUser)
+  .get("/user/me", validatingToken, GetUserInfos)
+  .put(
+    "/user/me",
+    validatingToken,
+    validateSchema(UpdateUserSchema),
+    UpdateUsersInfo
+  )
+  .put(
+    "/user/me/image",
+    validatingToken,
+    validateSchema(UpdateUserImageSchema),
+    UpdateUserImage
+  )
+  .post("/login", OAuthLogin);
 
 export default userRouter;

@@ -4,6 +4,8 @@ import * as userRepository from "../Repository/UserRepository";
 //  # Libs
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import axios from "axios";
+import qs from "query-string";
 
 //  - Types
 import { IRegisterUser } from "../Types/RegisterTypes";
@@ -58,7 +60,47 @@ export async function updateUserImage(urlImage: string, userId: number) {
   await userRepository.updateUserImage(urlImage, userId);
 }
 
+export async function OAuthLogin(code: any) {
+  const tokenGitHub = await exchangeCodeForAccessToken(code);
+  const userInfosGitHub = await fetchUser(tokenGitHub);
+  const user = await verifyUserExist(userInfosGitHub.email, true);
+  const token = generateToken(user.id);
+  const refreshToken = generateRefreshToken(user.id);
+  await userRepository.loginUser(token, refreshToken, user.id);
+  return token;
+}
+
 // - Aux functions
+
+async function exchangeCodeForAccessToken(code: any) {
+  const GITHUB_ACCESS_TOKEN_URL = "https://github.com/login/oauth/access_token";
+  const { REDIRECT_URL, CLIENT_ID, CLIENT_SECRET } = process.env;
+  const params = {
+    code,
+    grant_type: "authorization_code",
+    redirect_uri: REDIRECT_URL,
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET,
+  };
+  const { data } = await axios.post(GITHUB_ACCESS_TOKEN_URL, params, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const parsedData = qs.parse(data);
+  return parsedData.access_token;
+}
+
+async function fetchUser(token: any) {
+  const response = await axios.get("https://api.github.com/user", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+}
 
 function encryptPassword(password: string) {
   const SALT = 10;
