@@ -18,10 +18,16 @@ export async function getQuestionsAndAnswers() {
 
 export async function getQuestionsLikes(questionId: number) {
   const questionsAnswers = await prisma.assessments.count({
-    where: { 
+    where: {
       questionId,
     },
   });
 
   return questionsAnswers;
+}
+
+export async function CreateQuestion(question: string) {
+  return prisma.questions.create({
+    data: { question },
+  });
 }
