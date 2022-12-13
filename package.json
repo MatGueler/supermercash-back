@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "npx prisma migrate dev && node dist/Server.js",
+    "start": "npx prisma migrate dev && node dist/src/Server.js",
     "dev": "nodemon ./src/Server.ts",
     "prisma": "npx prisma migrate dev",
     "test:int": "npx dotenv -e .env.test prisma migrate dev && dotenv -e .env.test jest -- -i --coverage  --testPathPattern=Tests/Integration",
