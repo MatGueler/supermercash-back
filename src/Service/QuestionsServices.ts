@@ -21,3 +21,7 @@ export async function getAllQuestions() {
   );
   return assessmentsByQuestions;
 }
+
+export async function CreateNewQuestion(question: string, userId: number) {
+  await questionsRepository.CreateQuestion(question);
+}
