@@ -93,26 +93,34 @@ export async function OAuthRegisterAndLogin(code: any) {
 }
 
 // # Oauth with google
-export async function OAuthLoginGoogle(userGoogle: any) {
-  const user = await verifyUserExist(userGoogle.cu, true);
+export async function OAuthLoginGoogle(googleToken: any) {
+  const { email } = jwt.decode(googleToken) as {
+    email: string;
+  };
+  const user = await verifyUserExist(email, true);
   const token = generateToken(user.id);
   const refreshToken = generateRefreshToken(user.id);
   await userRepository.loginUser(token, refreshToken, user.id);
   return token;
 }
 
-export async function OAuthRegisterAndLoginWithGoogle(userGoogle: any) {
-  await verifyUserExist(userGoogle.cu, false);
+export async function OAuthRegisterAndLoginWithGoogle(googleToken: any) {
+  const { name, email, picture } = jwt.decode(googleToken) as {
+    name: string;
+    email: string;
+    picture: string;
+  };
+  await verifyUserExist(email, false);
 
   const password: string = generateRandomicPassword();
   const encryptedPassword = encryptPassword(password);
 
   const newUser = await createUser({
-    name: userGoogle.Ad,
-    email: userGoogle.cu,
+    name,
+    email,
     password: encryptedPassword,
   });
-  await updateUserImage(userGoogle.hK, newUser.id);
+  await updateUserImage(picture, newUser.id);
 
   const token = generateToken(newUser.id);
   const refreshToken = generateRefreshToken(newUser.id);
