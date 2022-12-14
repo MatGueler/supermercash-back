@@ -10,7 +10,6 @@ export async function getPurchaseValue(userId: number) {
 }
 
 async function orderValuesCarts(totalValueCarts: any) {
-  // console.log(totalValueCarts);
   let hashTable = {};
   const ordenedValues = [];
   for (let counter = 0; counter < totalValueCarts.length; counter++) {
@@ -46,7 +45,6 @@ async function getAllCartValue(supermarkets: any, purchaseValue: any) {
               supermarket.id,
               item.productId
             );
-            // sum += Number(getPrice.price) * Number(item.quantify);
             sum += Number(getPrice.price) * Number(item.quantify);
           }
         )
@@ -64,6 +62,5 @@ export async function getCartProductsQuantify(userId: number) {
   const cartQuantifyProducts = await cartRepository.getCartProductsQuantify(
     userId
   );
-  console.log(cartQuantifyProducts);
   return cartQuantifyProducts;
 }

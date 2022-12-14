@@ -50,13 +50,13 @@ export async function OAuthLogin(req: Request, res: Response) {
 }
 
 export async function OAuthLoginGoogle(req: Request, res: Response) {
-  const userInfos = req.body.user;
-  const token = await userService.OAuthLoginGoogle(userInfos);
+  const tokenGoogle = req.body.token;
+  const token = await userService.OAuthLoginGoogle(tokenGoogle);
   res.status(200).send(token);
 }
 
 export async function OAuthRegisterGoogle(req: Request, res: Response) {
-  const userInfos = req.body.user;
-  const token = await userService.OAuthRegisterAndLoginWithGoogle(userInfos);
-  res.status(201).send(token);
+  const token = req.body.token;
+  const tokenGoogle = await userService.OAuthRegisterAndLoginWithGoogle(token);
+  res.status(201).send(tokenGoogle);
 }
